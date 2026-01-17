@@ -4,6 +4,7 @@
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-green?style=for-the-badge&logo=spring-boot)
 ![Maven](https://img.shields.io/badge/Maven-3.9-blue?style=for-the-badge&logo=apache-maven)
 ![Blockchain](https://img.shields.io/badge/Blockchain-Ledger-blueviolet?style=for-the-badge&logo=blockchain)
+![Coverage](https://img.shields.io/badge/Coverage-76%25-brightgreen?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
 **Blockchain-Backed Audit Trail for Financial Middleware**
