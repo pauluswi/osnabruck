@@ -49,6 +49,7 @@ The design reflects **enterprise and financial-sector constraints**, emphasizing
               ▼
     ┌────────────────────────────┐
     │ Audit Verifier Service     │
+    │ (Module inside Middleware) │
     │ - Re-hash payload          │
     │ - Compare with Ledger      │
     │ - Integrity status         │
@@ -76,6 +77,21 @@ The design reflects **enterprise and financial-sector constraints**, emphasizing
 | Hashing | SHA-256 |
 | Ledger | In-Memory Mock (Simulating Private Blockchain) |
 | Testing | JUnit 5, Mockito |
+
+---
+
+## Real-World Blockchain Integration
+
+In this demonstration, the **Blockchain Layer** is mocked using an in-memory `ConcurrentHashMap` to simplify setup and testing.
+
+**In a production environment**, this mock would be replaced by a real blockchain integration:
+
+1.  **Smart Contract**: A Solidity contract (e.g., `AuditLedger.sol`) would be deployed to a private Ethereum network (e.g., Hyperledger Besu, Quorum, or a private Geth node).
+2.  **Web3j Integration**: The `BlockchainService` would use the **Web3j** library to sign and send transactions to the smart contract.
+3.  **Immutability**: Once mined, the audit hash is cryptographically secured by the blockchain network, making it impossible to alter or delete without invalidating the entire chain.
+4.  **Decentralization**: Multiple nodes (e.g., Regulator Node, Bank Node, Auditor Node) would host the ledger, ensuring no single party controls the audit trail.
+
+This project demonstrates the **application logic** and **verification flow** that remains identical regardless of the underlying storage mechanism.
 
 ---
 
@@ -163,10 +179,23 @@ Or run the provided shell script to test the API flow:
 
 ## Project Structure
 
-- `src/main/java/.../controller`: REST Endpoints (`TransactionController`, `VerificationController`)
-- `src/main/java/.../service`: Business Logic (`HashingService`, `BlockchainService`)
-- `src/main/java/.../simulator`: Traffic Generator (`CoreBankingSimulator`)
-- `src/main/java/.../model`: DTOs (`TransactionRequest`, `AuditRecordDto`)
+The project is a monolithic Spring Boot application organized by feature modules:
+
+- **Transaction Processing**:
+  - `TransactionController`: Receives and validates incoming requests.
+  - `HashingService`: Generates SHA-256 hashes.
+  - `BlockchainService`: Writes the hash to the immutable ledger.
+
+- **Audit Verification (The "Verifier Service")**:
+  - `VerificationController`: Exposes the `/api/verify` endpoint.
+  - Re-uses `HashingService` and `BlockchainService` (read-only) to validate integrity.
+
+- **Simulation**:
+  - `CoreBankingSimulator`: Generates random traffic.
+
+- **Data Models**:
+  - `TransactionRequest`: The financial payload.
+  - `AuditRecordDto`: The on-chain record structure.
 
 ---
 
