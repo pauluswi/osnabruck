@@ -1,4 +1,11 @@
 # Osnabrück - Immutable Audit Ledger
+
+![Java](https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=java)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2-green?style=for-the-badge&logo=spring-boot)
+![Maven](https://img.shields.io/badge/Maven-3.9-blue?style=for-the-badge&logo=apache-maven)
+![Blockchain](https://img.shields.io/badge/Blockchain-Ledger-blueviolet?style=for-the-badge&logo=blockchain)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
+
 **Blockchain-Backed Audit Trail for Financial Middleware**
 
 ## Overview
