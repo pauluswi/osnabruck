@@ -138,12 +138,12 @@ Once the application is running, you can explore the API via the **Swagger UI**:
 **POST** `/api/transactions`
 ```json
 {
-  "transactionId": "TX-1001",
+  "transactionId": "T-1001",
   "senderAccount": "DE123456789",
   "receiverAccount": "DE987654321",
   "amount": 500.00,
   "currency": "EUR",
-  "timestamp": "2023-10-27T10:00:00Z"
+  "timestamp": "2026-01-27T10:00:00Z"
 }
 ```
 *Response includes a `traceId`.*
@@ -159,7 +159,29 @@ Use the `traceId` from the previous step.
 ```
 *Response: `VERIFIED`*
 
-### 3. Simulate Tampering
+### 3. View Ledger (Audit Log)
+**GET** `/api/verify/ledger`
+Returns a list of all audit records currently stored in the mock blockchain.
+
+**Sample Response:**
+```json
+[
+  {
+    "traceId": "5a3cf4df-5be2-4c6f-a604-4814da0cb7f6",
+    "auditHash": "0e0624904ffd437ea318b5f3ed3995ed0ff3bb297c323e6add4219b826666a8a",
+    "timestamp": 1698400000,
+    "sourceSystem": "MOCK_CORE_BANKING"
+  },
+  {
+    "traceId": "d0c49605-482a-4d88-9592-a110a7139463",
+    "auditHash": "a1b2c3d4e5f6...",
+    "timestamp": 1698400010,
+    "sourceSystem": "MOCK_CORE_BANKING"
+  }
+]
+```
+
+### 4. Simulate Tampering
 Try verifying with a modified amount (e.g., change 500.00 to 500.01).
 *Response: `TAMPERED`*
 

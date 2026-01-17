@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -58,5 +60,9 @@ public class BlockchainService {
             throw new RuntimeException("Record not found for Trace ID: " + traceId);
         }
         return ledger.get(traceId);
+    }
+
+    public List<AuditRecordDto> getAllRecords() {
+        return new ArrayList<>(ledger.values());
     }
 }
