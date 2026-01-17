@@ -1,0 +1,54 @@
+### 1. Submit a Transaction
+# This sends a transaction to the middleware.
+# It will be hashed and logged to the blockchain asynchronously.
+POST http://localhost:8080/api/transactions
+Content-Type: application/json
+
+{
+  "transactionId": "TX-1001",
+  "senderAccount": "DE123456789",
+  "receiverAccount": "DE987654321",
+  "amount": 500.00,
+  "currency": "EUR",
+  "timestamp": "2023-10-27T10:00:00Z"
+}
+
+> {%
+    client.global.set("traceId", response.body.traceId);
+    client.log("Trace ID saved: " + response.body.traceId);
+%}
+
+### 2. Verify the Transaction (Integrity Check)
+# Uses the Trace ID from the previous request to fetch the hash from the blockchain
+# and compares it with the re-calculated hash of the data below.
+POST http://localhost:8080/api/verify
+Content-Type: application/json
+
+{
+  "traceId": "{{traceId}}",
+  "transactionData": {
+    "transactionId": "TX-1001",
+    "senderAccount": "DE123456789",
+    "receiverAccount": "DE987654321",
+    "amount": 500.00,
+    "currency": "EUR",
+    "timestamp": "2023-10-27T10:00:00Z"
+  }
+}
+
+### 3. Verify a Tampered Transaction (Should Fail)
+# We changed the amount to 500.01. The hash will not match the blockchain record.
+POST http://localhost:8080/api/verify
+Content-Type: application/json
+
+{
+  "traceId": "{{traceId}}",
+  "transactionData": {
+    "transactionId": "TX-1001",
+    "senderAccount": "DE123456789",
+    "receiverAccount": "DE987654321",
+    "amount": 500.01,
+    "currency": "EUR",
+    "timestamp": "2023-10-27T10:00:00Z"
+  }
+}

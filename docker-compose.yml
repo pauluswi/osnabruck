@@ -1,0 +1,18 @@
+services:
+  middleware:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - BLOCKCHAIN_NODE_URL=http://blockchain:8545
+      # You will need to update these after the blockchain starts and you deploy the contract
+      - BLOCKCHAIN_CONTRACT_ADDRESS=0x254dffcd3277c0b1660f6d42efbb754edababc2b
+      - BLOCKCHAIN_ACCOUNT_PRIVATE_KEY=0x4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d
+    depends_on:
+      - blockchain
+
+  blockchain:
+    image: trufflesuite/ganache:latest
+    ports:
+      - "8545:8545"
+    command: ["--wallet.totalAccounts", "5", "--wallet.defaultBalance", "100", "--wallet.mnemonic", "myth like bonus scare over problem client lizard pioneer submit female collect"]
