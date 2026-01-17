@@ -87,6 +87,7 @@ In this demonstration, the **Blockchain Layer** is mocked using an in-memory `Co
 **In a production environment**, this mock would be replaced by a real blockchain integration:
 
 1.  **Smart Contract**: A Solidity contract (e.g., `AuditLedger.sol`) would be deployed to a private Ethereum network (e.g., Hyperledger Besu, Quorum, or a private Geth node).
+    *   *Note: A reference implementation of this contract is included in `blockchain/AuditLedger.sol`.*
 2.  **Web3j Integration**: The `BlockchainService` would use the **Web3j** library to sign and send transactions to the smart contract.
 3.  **Immutability**: Once mined, the audit hash is cryptographically secured by the blockchain network, making it impossible to alter or delete without invalidating the entire chain.
 4.  **Decentralization**: Multiple nodes (e.g., Regulator Node, Bank Node, Auditor Node) would host the ledger, ensuring no single party controls the audit trail.
